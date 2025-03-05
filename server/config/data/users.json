@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "uuid": "636d1afa-0be6-4b06-914d-98b5e68ae0fa",
+      "id": 3,
+      "firstName": "editor",
+      "lastName": "admin",
+      "userName": "editoradmin",
+      "type": "editor",
+      "status": "inactive"
+    },
+    {
+      "uuid": "51508ada-6d59-4230-b2ba-1e38dbe4819f",
+      "id": 2,
+      "firstName": "User",
+      "lastName": "Admin",
+      "userName": "useradmin",
+      "type": "user",
+      "status": "inactive"
+    },
+    {
+      "uuid": "fa47e38e-f1e9-445d-9f5a-205a0e59f04e",
+      "id": 1,
+      "firstName": "",
+      "lastName": "Admin",
+      "email": "superadmin@gmail.com",
+      "userName": "admin",
+      "type": "administrator",
+      "status": "active",
+      "password": "$2a$10$vtllem50mZCrNxtovMJvGecZc/D82ezOb1xElCtu1lNv7PTsBJdeC"
+    },
+    {
+      "uuid": "21661820-de70-4997-8b61-31b8255f34c3",
+      "id": 4,
+      "firstName": "Writer",
+      "lastName": "Admin",
+      "userName": "writeradmin",
+      "type": "writer",
+      "status": "active"
+    }
+  ]
+}

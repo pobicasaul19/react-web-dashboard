@@ -1,0 +1,23 @@
+{
+  "name": "archintel-dashboard-exam",
+  "version": "1.0.0",
+  "description": "Editor/Writer Dashboard Portal",
+  "main": "index.js",
+  "scripts": {
+    "heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "build:client": "cd ./client && npm run build",
+    "build:server": "cd ./server && npm run build",
+    "start:client": "cd ./client && npm run dev",
+    "start:server": "cd ./server && npm run start",
+    "install:server": "cd ./server && npm install",
+    "install:client": "cd ./client && npm install",
+    "build:all": "npm run build:client && npm run build:server",
+    "install:all": "npm install && npm run install:server && npm run install:client",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\""
+  },
+  "author": "Pobi Casaul",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

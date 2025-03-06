@@ -30,5 +30,5 @@ export const status = [
 
 export const joinDataError = (data: Record<string, unknown>, key: string) => {
   const value = data[key];
-  return Array.isArray(value) ? value.join(', ') : value || '';
+  return Array.isArray(value) ? value.join(', ') : value ?? '';
 };

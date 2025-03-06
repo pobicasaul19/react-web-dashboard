@@ -2,9 +2,9 @@
  Develop a Dashboard Site that can create, edit a  company, article, and publish an article related to a company.
 
 ## Features
-* Login to the app via username and password
+* Login to the app via email and password
 * Restrict access to valid a User
-* Vue-3 (Frontend)
+* React 18, Tailwind and Material UI (Frontend)
 * lowdb (DB)
 * Express.js and Node.js (Backend)
 You will find the base data file in `server/config/data`

@@ -1,15 +1,13 @@
-interface ErrorMetadata {
-  message: string;
+interface ErrorMessage {
+  [key: string]: Record<string, unknown>;
 }
 
 interface ErrorResponseData {
-  metadata: ErrorMetadata;
-}
-
-interface ErrorResponse {
-  data: ErrorResponseData;
+  data: ErrorMessage;
 }
 
 export interface ErrorType {
-  response: ErrorResponse;
+  response: {
+    data: ErrorResponseData;
+  };
 }

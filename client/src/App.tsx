@@ -1,10 +1,13 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import pagesData from './pages/pageData';
+import { NotificationsProvider } from '@toolpad/core/useNotifications';
 
 const router = createBrowserRouter(pagesData)
 export function App() {
   return (
-    <RouterProvider router={router} />
+    <NotificationsProvider>
+      <RouterProvider router={router} />
+    </NotificationsProvider>
   );
 }
 

@@ -5,7 +5,8 @@ import {
 import LoginService from '../services/LoginService';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../feature/AuthContext';
-import type { ErrorType } from '../models/ErrorType';
+import { joinDataError } from '../utils';
+import { ErrorType } from '../models/ErrorType';
 
 const providers = [
   { id: 'credentials', name: 'Email and Password' },
@@ -31,10 +32,10 @@ export function LoginPage() {
       }
     } catch (error) {
       const errorInfo = error as ErrorType;
-      const errorMessage = errorInfo.response.data.metadata.message;
+      const errorData = errorInfo.response.data.data;
       return Promise.resolve({
         type: 'CredentialsSignin',
-        error: errorMessage,
+        error: joinDataError(errorData, 'email') || joinDataError(errorData, 'password'),
       });
     }
   };

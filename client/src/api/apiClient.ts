@@ -15,7 +15,8 @@ class HttpClient {
   protected axiosInstance: AxiosInstance;
   constructor() {
     this.axiosInstance = axios.create({
-      baseURL: 'https://web-portal-production-f18a.up.railway.app/api',
+      // baseURL: 'https://web-portal-production-f18a.up.railway.app/api',
+      baseURL: 'http://localhost:5000/api',
       headers: {
         Accept: 'application/json'
       },

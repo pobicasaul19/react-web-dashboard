@@ -1,8 +1,7 @@
 {
-  "name": "archintel-dashboard-exam",
+  "name": "react-web-dashboard",
   "version": "1.0.0",
-  "description": "Editor/Writer Dashboard Portal",
-  "main": "index.js",
+  "description": "Dashboard Portal",
   "scripts": {
     "heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "build:client": "cd ./client && npm run build",

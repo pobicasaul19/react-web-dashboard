@@ -42,7 +42,7 @@ export const createUser = async (req, res) => {
     // Check if the user already exists
     const userExist = usersCollection.data.users.find(user => user.firstName === firstName);
     if (userExist) {
-      return res.status(409).json({ message: 'User firstname already exists.' });
+      return res.status(400).json({ message: 'User firstname already exists.' });
     }
 
     // Count existing documents to generate a unique ID

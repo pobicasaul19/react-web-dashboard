@@ -20,8 +20,9 @@ export const login = async (req, res) => {
     const field = { email, password };
     const context = { usersCollection, email };
 
+    const user = usersCollection.data.users.find(user => user.email === email);
     const errors = await validationMessage(field, authSchema, context);
-    errors && res.status(400).json(
+    (!user || errors) && res.status(400).json(
       {
         data: errors,
         metadata: {
@@ -29,9 +30,6 @@ export const login = async (req, res) => {
         }
       }
     );
-
-    const user = usersCollection.data.users.find(user => user.email === email);
-    !user && res.status(401).json({ message: 'Unauthorized' });
 
     const accessToken = generateAccessToken(user.uuid);
     const { password: _, ...userWithoutPassword } = user;

@@ -6,9 +6,9 @@ type CrudEndpoints = {
   UPDATE: (uuid: string) => string;
 };
 
-type CustomEndpoints = Record<string, (...args: any[]) => string>;
+type CustomEndpoints = Record<string, (...args: unknown[]) => string>;
 
-const createCrudEndpoints = <T extends CustomEndpoints = {}>(
+const createCrudEndpoints = <T extends CustomEndpoints = CustomEndpoints>(
   base: string,
   additionalEndpoints?: T
 ): CrudEndpoints & T => {

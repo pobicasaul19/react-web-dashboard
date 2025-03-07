@@ -18,7 +18,7 @@ export const MainLayout: React.FC<IReactProps> = ({ children }) => {
           component="main"
           sx={{ display: 'flex', flexDirection: 'column', my: {xs: 10, md: 0}, gap: 4 }}
           >
-          <Stack spacing={2}>
+          <Stack spacing={2} sx={{marginBottom: 2}}>
             <AppNavbar />
             {children}
           </Stack>

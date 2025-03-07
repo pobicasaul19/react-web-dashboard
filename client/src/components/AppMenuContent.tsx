@@ -11,7 +11,7 @@ import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const mainListItems = [
-  { link: '/', text: 'All categories', icon: <HomeRoundedIcon /> },
+  { link: '/', text: 'Home', icon: <HomeRoundedIcon /> },
   { link: '/companies', text: 'Company', icon: <BusinessIcon /> },
   { link: '/articles', text: 'Article', icon: <ArticleIcon /> },
   { link: '/users', text: 'Users', icon: <PeopleRoundedIcon /> },

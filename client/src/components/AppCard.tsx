@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import AppButton from '../commons/button';
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -21,38 +22,31 @@ const SyledCardContent = styled(CardContent)({
   },
 });
 
-const Author = ({ author }: { author: string | undefined }) => {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Box
-        sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
-      >
-        <Typography sx={{ textTransform: 'capitalize' }} variant="caption">
-          {author}
-        </Typography>
-      </Box>
-    </Box>
-  );
-}
-
 interface IAppCard {
   image: string,
-  variant: string | undefined,
   title: string,
+  label?: string,
+  variant: string | undefined,
   description: string | undefined,
-  author: string | undefined,
+  editor: string | undefined,
+  writer: string | undefined,
   date: string | undefined
+  status: string | undefined
+  editable: boolean | undefined,
 }
 
-function AppCard({ image, variant, title, description, author, date }: IAppCard) {
+function AppCard({
+  date,
+  image,
+  label,
+  title,
+  editor,
+  status,
+  writer,
+  variant,
+  editable,
+  description,
+}: IAppCard) {
   const [expanded, setExpanded] = useState(false);
 
   const handleToggleExpand = () => {
@@ -63,18 +57,13 @@ function AppCard({ image, variant, title, description, author, date }: IAppCard)
     <SyledCard
       variant="outlined"
       tabIndex={0}
-      sx={expanded ? { height: '100%' } : { height: '32rem' }}
+      sx={expanded ? { height: '100%' } : { height: 'auto' }}
     >
       <CardMedia
         component="img"
         alt={title}
         image={image}
-        sx={{
-          aspectRatio: '16 / 9',
-          borderBottom: '1px solid',
-          borderColor: 'divider',
-          objectFit: 'contain'
-        }}
+        className='aspect-[16/9] object-contain border-b'
       />
       <SyledCardContent>
         <Typography
@@ -83,28 +72,43 @@ function AppCard({ image, variant, title, description, author, date }: IAppCard)
           component="span"
           sx={variant === 'Published' ? { color: 'blue' } : variant === 'Company' ? { color: 'black' } : { color: 'green' }}
         >
-          {variant} <br />
-          <Typography variant="caption">{date}</Typography>
+          {variant}
         </Typography>
-        <Typography gutterBottom variant="h6" component="div">
-          {title} <br />
-          {author ? <Author author={author} /> : null}
+        <Typography variant="caption">{date}</Typography>
+        <Typography className='flex flex-col capitalize truncate ... w-60' gutterBottom variant="h6" component='p'>
+          {title}
+          <Typography variant='subtitle1' component='span' sx={status === 'active' ? { color: 'green' } : { color: 'red' }}>
+            {status}
+          </Typography>
         </Typography>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          {!description
-            ? null
-            : expanded
+        {variant === 'Company'
+          ? null
+          : (
+            <Box>
+              <Typography sx={{ display: 'flex', textTransform: 'capitalize' }} gutterBottom variant='subtitle2' component="p">
+                Editor: {editor ? editor : 'No valid editor'}
+              </Typography>
+              <Typography sx={{ display: 'flex', textTransform: 'capitalize' }} gutterBottom variant='subtitle2' component="p">
+                Writer: {writer ? writer : 'No valid writer'}
+              </Typography>
+            </Box>
+          )}
+        {!description
+          ? null
+          : <Typography variant="body2" color="text.secondary" gutterBottom>
+            {expanded
               ? description
               : description?.substring(0, 100) + (description && description.length > 100
                 ? '...'
-                : '')
-          }
-        </Typography>
+                : '')}
+          </Typography>
+        }
         {description && description.length > 100 && (
           <Typography component='span' variant='caption' sx={{ cursor: 'pointer' }} onClick={handleToggleExpand}>
             {expanded ? 'Show Less' : 'Read More'}
           </Typography>
         )}
+        {editable && <Box sx={{ maxWidth: 200 }}><AppButton editor={true} label={`Edit ${label}`} color='success' /></Box>}
       </SyledCardContent>
     </SyledCard>
   )

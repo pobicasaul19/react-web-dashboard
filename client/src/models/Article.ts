@@ -10,6 +10,6 @@ export interface Article extends ArticlePayload {
   uuid: string;
   id: number;
   status: string;
-  writer: string | null;
-  editor: string | null;
+  writer: string | undefined;
+  editor: string | undefined;
 }

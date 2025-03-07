@@ -5,7 +5,7 @@ import { USER_ENDPOINTS } from '../constant/apiConstant';
 class UserService {
   public async getUsers(): Promise<User[]> {
     const response = await authorizedHttpClient.get<User[]>(USER_ENDPOINTS.GET_ALL);
-    return response.data as User[];
+    return response as User[];
   }
 
   public async addUser(payload: UserPayload): Promise<User> {

@@ -1,4 +1,4 @@
-import { Chip, Box } from '@mui/material';
+import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { useEffect, useState, Suspense, lazy } from 'react';
 import { Article } from '../models/Article';
@@ -33,9 +33,9 @@ export function HomePage() {
 
   return (
     <>
-      <Box>
-        <Chip size="medium" label="All categories" />
-      </Box>
+      <Typography variant="h5" gutterBottom>
+        All Categories
+      </Typography>
       <Grid container spacing={2} columns={12}>
         {companyList.slice(0, 2).map((item, i) => (
           <Grid key={i} size={{ xs: 12, md: 6 }}>
@@ -44,9 +44,12 @@ export function HomePage() {
                 image={item.logo}
                 title={item.name}
                 variant={'Company'}
-                description={undefined}
-                author={undefined}
+                status={item.status}
                 date={undefined}
+                editor={undefined}
+                writer={undefined}
+                description={undefined}
+                editable={undefined}
               />
             </Suspense>
           </Grid>
@@ -60,8 +63,11 @@ export function HomePage() {
                 variant={item.status}
                 title={item.title}
                 description={item.content}
-                author={item.editor ?? item.writer ?? ''}
+                writer={item.writer}
+                editor={item.editor}
                 date={item.date}
+                status={undefined}
+                editable={undefined}
               />
             </Suspense>
           </Grid>

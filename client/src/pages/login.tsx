@@ -86,7 +86,11 @@ const Title = () => {
   </Typography>;
 }
 const Button = () => {
-  return <AppButton label='Log in' />
+  return (
+    <div className='mt-2'>
+      <AppButton editor={true} label='Log in' color='inherit' />
+    </div>
+  )
 }
 
 export function LoginPage() {

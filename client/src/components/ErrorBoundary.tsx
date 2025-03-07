@@ -23,8 +23,8 @@ function ErrorBoundary(Component: React.FC) {
 
     if (errorState.hasError) {
       return (
-        <Container>
-          <Card>
+        <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <Card sx={{ padding: 4, textAlign: 'center' }}>
             <h1>Something went wrong.</h1>
             <p>{errorState.error?.message}</p>
             <Button onClick={handleRetry}>Retry</Button>

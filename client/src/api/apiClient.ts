@@ -1,4 +1,5 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
+import { axiosConfig, tokenInjector } from './apiConfig';
 
 export interface ApiError {
   message: string;
@@ -15,8 +16,7 @@ class HttpClient {
   protected axiosInstance: AxiosInstance;
   constructor() {
     this.axiosInstance = axios.create({
-      // baseURL: 'https://web-portal-production-f18a.up.railway.app/api',
-      baseURL: 'http://localhost:5000/api',
+      baseURL: axiosConfig.baseURL,
       headers: {
         Accept: 'application/json'
       },
@@ -90,20 +90,13 @@ const authorizedClientError = (error: AxiosError): Promise<never> => {
 };
 
 class AuthorizedHttpClient extends HttpClient {
-  constructor(token: string | null) {
+  constructor() {
     super();
-    this.axiosInstance.interceptors.request.use((config) => {
-      if (token) {
-        config.headers = config.headers || {};
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    });
+    this.axiosInstance.interceptors.request.use(tokenInjector);
     this.axiosInstance.interceptors.response.use(undefined, authorizedClientError);
   }
 }
 
 // Create instances of HttpClient and AuthorizedHttpClient
-export const createAuthorizedHttpClient = (token: string | null) =>
-  new AuthorizedHttpClient(token);
+export const authorizedHttpClient = new AuthorizedHttpClient();
 export const httpClient = new HttpClient();

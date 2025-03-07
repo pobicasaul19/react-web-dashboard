@@ -1,5 +1,5 @@
 export interface AuthUser {
-  userInfo: User | null;
+  user: User | null;
   token: string | null;
 }
 export interface UserPayload {
@@ -11,5 +11,6 @@ export interface UserPayload {
 export interface User extends UserPayload {
   uuid: string;
   id: number;
+  email: string;
   userName: string;
 }

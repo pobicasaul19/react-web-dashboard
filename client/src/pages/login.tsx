@@ -1,16 +1,93 @@
+import { useState } from 'react';
+import {
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+  InputAdornment,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import {
   SignInPage,
   type AuthProvider,
 } from '@toolpad/core/SignInPage';
-import LoginService from '../services/LoginService';
-import { useNavigate } from "react-router-dom";
-import { useAuth } from '../feature/AuthContext';
 import { joinDataError } from '../utils';
+import AppButton from '../commons/button';
+import { useNavigate } from "react-router-dom";
 import { ErrorType } from '../models/ErrorType';
+import { useAuth } from '../feature/AuthContext';
+import LoginService from '../services/LoginService';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-const providers = [
-  { id: 'credentials', name: 'Email and Password' },
-];
+const providers = [{ id: 'credentials', name: 'Email and Password' }];
+
+const EmailField = () => {
+  return (
+    <TextField
+      id="input-with-icon-textfield"
+      label="Email"
+      name="email"
+      type="email"
+      size="small"
+      required
+      fullWidth
+      variant="outlined"
+    />
+  );
+}
+
+const PasswordField = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent) => {
+    event.preventDefault();
+  };
+
+  return (
+    <FormControl sx={{ my: 2 }} fullWidth variant="outlined">
+      <InputLabel size="small" htmlFor="outlined-adornment-password">
+        Password
+      </InputLabel>
+      <OutlinedInput
+        id="outlined-adornment-password"
+        type={showPassword ? 'text' : 'password'}
+        name="password"
+        size="small"
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+              edge="end"
+              size="small"
+            >
+              {showPassword ? (
+                <VisibilityOff fontSize="inherit" />
+              ) : (
+                <Visibility fontSize="inherit" />
+              )}
+            </IconButton>
+          </InputAdornment>
+        }
+        label="Password"
+      />
+    </FormControl>
+  );
+}
+
+const Title = () => {
+  return <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
+    Login
+  </Typography>;
+}
+const Button = () => {
+  return <AppButton label='Log in' />
+}
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -39,17 +116,17 @@ export function LoginPage() {
       });
     }
   };
-
   return (
     <SignInPage
+      slots={{
+        title: Title,
+        emailField: EmailField,
+        passwordField: PasswordField,
+        submitButton: Button,
+      }}
       signIn={signIn}
       providers={providers}
-      sx={{
-        '& form > .MuiStack-root': {
-          marginTop: '2rem',
-          rowGap: '0.5rem',
-        },
-      }}
     />
+
   );
 }

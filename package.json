@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Dashboard Portal",
   "scripts": {
-    "heroku-postbuild": "cd client/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "build:client": "cd ./client && npm run build",
     "build:server": "cd ./server && npm run build",
     "start:client": "cd ./client && npm run dev",

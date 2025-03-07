@@ -1,7 +1,7 @@
 import { type InternalAxiosRequestConfig, type AxiosRequestHeaders } from 'axios';
 
 const axiosConfig = {
-  baseURL: 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URI
 };
 
 // Token injector function to dynamically get the token

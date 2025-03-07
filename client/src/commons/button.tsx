@@ -5,9 +5,10 @@ interface IAppButtonProps {
   onClick?: () => void;
   editor: boolean | undefined;
   color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+  loading?: boolean
 }
 
-export default function AppButton({ label, onClick, editor, color }: IAppButtonProps) {
+export default function AppButton({ label, onClick, editor, color, loading }: IAppButtonProps) {
   return (
     <>
       {editor &&
@@ -22,6 +23,7 @@ export default function AppButton({ label, onClick, editor, color }: IAppButtonP
           sx={{
             textTransform: 'none',
           }}
+          loading={loading}
         >
           {label}
         </Button>

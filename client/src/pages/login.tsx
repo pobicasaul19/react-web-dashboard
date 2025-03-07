@@ -85,10 +85,10 @@ const Title = () => {
     Login
   </Typography>;
 }
-const Button = () => {
+const Button = ({ isLoading }: { isLoading: boolean }) => {
   return (
     <div className='mt-2'>
-      <AppButton editor={true} label='Log in' color='inherit' />
+      <AppButton editor={true} label={'Log in'} color='inherit' loading={isLoading} />
     </div>
   )
 }
@@ -96,6 +96,7 @@ const Button = () => {
 export function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const signIn: (provider: AuthProvider, formData: FormData) => void = async (
     _provider,
@@ -105,6 +106,7 @@ export function LoginPage() {
       email: formData.get('email') as string,
       password: formData.get('password') as string,
     };
+    setIsLoading(true);
     try {
       const response = await LoginService.validateLogin(payload);
       if (response) {
@@ -118,6 +120,8 @@ export function LoginPage() {
         type: 'CredentialsSignin',
         error: joinDataError(errorData, 'email') || joinDataError(errorData, 'password'),
       });
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -126,11 +130,10 @@ export function LoginPage() {
         title: Title,
         emailField: EmailField,
         passwordField: PasswordField,
-        submitButton: Button,
+        submitButton: () => <Button isLoading={isLoading} />,
       }}
       signIn={signIn}
       providers={providers}
     />
-
   );
 }

@@ -19,10 +19,9 @@ export const login = async (req, res) => {
 
     const field = { email, password };
     const context = { usersCollection, email };
-
-    const user = usersCollection.data.users.find(user => user.email === email);
     const errors = await validationMessage(field, authSchema, context);
-    (!user || errors) && res.status(400).json(
+
+    errors && res.status(400).json(
       {
         data: errors,
         metadata: {
@@ -31,6 +30,7 @@ export const login = async (req, res) => {
       }
     );
 
+    const user = usersCollection.data.users.find(user => user.email === email);
     const accessToken = generateAccessToken(user.uuid);
     const { password: _, ...userWithoutPassword } = user;
     res.status(200).json({

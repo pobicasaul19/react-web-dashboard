@@ -45,7 +45,7 @@ app.use('/api/auth/login', login);
 const dir = path.dirname(fileURLToPath(import.meta.url))
 app.use('/assets', express.static(path.join(dir, 'assets')));
 
-authMiddleware(app);
+// authMiddleware(app);
 // Users endpoint
 app.use('/api/users', getUsers);
 app.use('/api/users', createUser);
@@ -63,7 +63,7 @@ app.use('/api/articles', updateArticle);
 
 // Start the server
 const port = 5000;
-const apiUri = `http://localhost:${port}`;
+const apiUri = process.env.APP_URI;
 const server = app.listen(port, async () => {
   logger.info(`Server running on ${apiUri}`);
   logger.info(`Swagger running on ${apiUri}/documentation`);

@@ -5,10 +5,11 @@ import authSchema from '../models/authModel.js';
 import { loadUserCollection } from '../config/db.js';
 import validationMessage from '../utils/validationError.js';
 import { mergeRequestData } from '../utils/mergeRequestData.js';
+import { setCookie } from '../middleware/authMiddleware.js';
 
 // Generate access token
 const generateAccessToken = (uuid) => {
-  return jwt.sign({ uuid }, process.env.APP_TOKEN_KEY, { expiresIn: '7d' });
+  return jwt.sign({ uuid }, process.env.APP_TOKEN_KEY, { expiresIn: '1d' });
 };
 
 // Login user
@@ -35,15 +36,6 @@ export const login = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user;
 
     // Set cookies
-    const setCookie = (name, value) => {
-      res.cookie(name, value, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 24 * 1 // 1 day
-      });
-    };
-
     setCookie('accessToken', accessToken);
     setCookie('user', userWithoutPassword);
 

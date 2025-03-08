@@ -7,7 +7,6 @@ const authMiddleware = (app) => {
 
   const verifyToken = (req, res, next) => {
     const token = req.cookies.accessToken;
-    console.log(token)
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized.' });
     }
@@ -22,6 +21,16 @@ const authMiddleware = (app) => {
 
   app.use(verifyToken);
   return app;
+};
+
+export const setCookie = (res, name, value) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  res.cookie(name, value, {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: 'strict',
+    maxAge: 60 * 60 * 24 * 1 // 1 day
+  });
 };
 
 export default authMiddleware;

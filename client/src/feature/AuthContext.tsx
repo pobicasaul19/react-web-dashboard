@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { AuthUser } from '../models/User';
 import { useTheme } from '@mui/material/styles';
 import { AppProvider } from '@toolpad/core/AppProvider';
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -11,32 +11,27 @@ interface AuthContextProps {
   logout: () => void;
   getAuth: () => AuthUser | null;
 }
+
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [authValue, setAuthValue] = useState<AuthUser | null>(null);
-  const isAuthenticated = !!authValue;
+  const [authState, setAuthState] = useState<AuthUser | null>(null);
   const theme = useTheme();
-
-  // Get auth from cookies when the component mounts
-  useEffect(() => {
-    const token = Cookies.get('accessToken');
-    if (token) {
-      setAuthValue({ user: null, token })
-    }
-  }, []);
-
+  const isAuthenticated = !!authState;
+  
   const login = (auth: AuthUser) => {
-    setAuthValue({ user: auth.user, token: null })
+    Cookies.set('user', JSON.stringify(auth.user));
+    Cookies.set('accessToken', auth.token ?? '');
+    setAuthState(auth);
   };
 
   const logout = () => {
+    setAuthState(null);
     Cookies.remove('accessToken');
-    Cookies.remove('user');
-    setAuthValue(null);
+    Cookies.remove('user')
   };
 
-  const getAuth = () => authValue;
+  const getAuth = () => authState;
 
   return (
     <AppProvider theme={theme}>
@@ -46,9 +41,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     </AppProvider>
   );
 };
-
-export const getAuth = () => {
-}
 
 export const useAuth = (): AuthContextProps => {
   const context = useContext(AuthContext);

@@ -14,6 +14,7 @@ import {
 } from '@toolpad/core/SignInPage';
 import { joinDataError } from '../utils';
 import AppButton from '../commons/button';
+import { AuthUser } from '../models/User';
 import { useNavigate } from "react-router-dom";
 import { ErrorType } from '../models/ErrorType';
 import { useAuth } from '../feature/AuthContext';
@@ -108,7 +109,7 @@ export function LoginPage() {
     };
     setIsLoading(true);
     try {
-      const response = await LoginService.validateLogin(payload);
+      const response: AuthUser = await LoginService.validateLogin(payload);
       if (response) {
         login(response);
         navigate('/');

@@ -23,14 +23,4 @@ const authMiddleware = (app) => {
   return app;
 };
 
-export const setCookie = (res, name, value) => {
-  const isProduction = process.env.NODE_ENV === 'production';
-  res.cookie(name, value, {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: 'strict',
-    maxAge: 60 * 60 * 24 * 1 // 1 day
-  });
-};
-
 export default authMiddleware;

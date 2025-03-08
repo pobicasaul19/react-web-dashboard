@@ -5,7 +5,6 @@ import authSchema from '../models/authModel.js';
 import { loadUserCollection } from '../config/db.js';
 import validationMessage from '../utils/validationError.js';
 import { mergeRequestData } from '../utils/mergeRequestData.js';
-import { setCookie } from '../middleware/authMiddleware.js';
 
 // Generate access token
 const generateAccessToken = (uuid) => {
@@ -36,6 +35,16 @@ export const login = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user;
 
     // Set cookies
+    const setCookie = (name, value) => {
+      const isProduction = process.env.NODE_ENV === 'production';
+      res.cookie(name, value, {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: 'strict',
+        maxAge: 60 * 60 * 24 * 1 // 1 day
+      });
+    };
+
     setCookie('accessToken', accessToken);
     setCookie('user', userWithoutPassword);
 
@@ -45,6 +54,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     logger.error('Login error', { error });
-    res.status(500).json({ message: 'Server error' });
+    console.log(error)
+    res.status(500).json({ message: error });
   }
 };

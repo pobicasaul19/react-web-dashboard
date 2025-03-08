@@ -38,7 +38,7 @@ export const login = async (req, res) => {
     const setCookie = (name, value) => {
       res.cookie(name, value, {
       httpOnly: true,
-      secure: process.env.NODE_ENV ==== 'production',
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 60 * 60 * 24 * 1 // 1 day
       });

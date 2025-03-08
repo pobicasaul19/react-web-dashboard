@@ -55,23 +55,26 @@ export function HomePage() {
           </Grid>
         ))}
 
-        {articleList.map((item, i) => (
-          <Grid key={i} size={{ xs: 12, md: 4 }}>
-            <Suspense fallback={<SkeletonCard />}>
-              <AppCard
-                image={item.image}
-                variant={item.status}
-                title={item.title}
-                description={item.content}
-                writer={item.writer}
-                editor={item.editor}
-                date={item.date}
-                status={undefined}
-                editable={undefined}
-              />
-            </Suspense>
-          </Grid>
-        ))}
+        {articleList
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3)
+          .map((item, i) => (
+            <Grid key={i} size={{ xs: 12, md: 4 }}>
+              <Suspense fallback={<SkeletonCard />}>
+          <AppCard
+            image={item.image}
+            variant={item.status}
+            title={item.title}
+            description={item.content}
+            writer={item.writer}
+            editor={item.editor}
+            date={item.date}
+            status={undefined}
+            editable={undefined}
+          />
+              </Suspense>
+            </Grid>
+          ))}
       </Grid>
     </>
   );

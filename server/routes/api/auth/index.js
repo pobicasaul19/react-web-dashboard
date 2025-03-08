@@ -25,8 +25,8 @@ import { login } from '../../../controller/authController.js';
  *     responses:
  *       200:
  *         description: Success
- *       401:
- *         description: Unauthorized
+ *       400:
+ *         description: Bad request
  */
 const router = express.Router()
   .post('/login', login);

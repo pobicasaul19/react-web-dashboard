@@ -18,7 +18,7 @@ export const login = async (req, res) => {
     const { email, password } = mergeRequestData(req);
 
     const field = { email, password };
-    const context = { usersCollection, email };
+    const context = { usersCollection };
     const errors = await validationMessage(field, authSchema, context);
 
     errors && res.status(400).json(

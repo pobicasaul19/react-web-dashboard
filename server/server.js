@@ -44,7 +44,7 @@ import getArticles from './routes/api/articles/index.js';
 import createArticle from './routes/api/articles/create.js';
 import updateArticle from './routes/api/articles/update.js';
 
-app.use('/api/auth/login', login);
+app.use('/api/auth', login);
 const dir = path.dirname(fileURLToPath(import.meta.url))
 app.use('/assets', express.static(path.join(dir, 'assets')));
 

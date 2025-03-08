@@ -29,5 +29,5 @@ import { login } from '../../../controller/authController.js';
  *         description: Unauthorized
  */
 const router = express.Router()
-  .post('/', login);
+  .post('/login', login);
 export default router;

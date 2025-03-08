@@ -1,5 +1,6 @@
 import express from 'express';
 import { login } from '../../../controller/authController.js';
+
 /**
  * @swagger
  * /api/auth/login:

@@ -10,17 +10,17 @@ const swaggerOptions = {
     },
     components: {
       securitySchemes: {
-        BearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-          description: 'Enter your token in the format: Bearer <token>',
+        CookieAuth: {
+          type: 'apiKey',
+          in: 'cookie',
+          name: 'accessToken',
+          description: 'JWT stored in an HTTP-only cookie',
         },
       },
     },
     security: [
       {
-        BearerAuth: [],
+        CookieAuth: [],
       },
     ],
   },
@@ -29,4 +29,4 @@ const swaggerOptions = {
 
 const swaggerInfo = swaggerJSDoc(swaggerOptions);
 
-export default swaggerInfo
+export default swaggerInfo;

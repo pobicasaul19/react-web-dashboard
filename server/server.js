@@ -18,7 +18,10 @@ app.set("trust proxy", true)
 
 // Middelwares
 app.use(credentials);
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: corsOptions,
+  credentials: true
+}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
@@ -45,7 +48,7 @@ app.use('/api/auth/login', login);
 const dir = path.dirname(fileURLToPath(import.meta.url))
 app.use('/assets', express.static(path.join(dir, 'assets')));
 
-// authMiddleware(app);
+authMiddleware(app);
 // Users endpoint
 app.use('/api/users', getUsers);
 app.use('/api/users', createUser);

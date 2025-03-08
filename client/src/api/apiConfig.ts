@@ -1,4 +1,5 @@
 import { type InternalAxiosRequestConfig, type AxiosRequestHeaders } from 'axios';
+import Cookies from 'js-cookie';
 
 const axiosConfig = {
   baseURL: import.meta.env.VITE_API_URI
@@ -6,9 +7,7 @@ const axiosConfig = {
 
 // Token injector function to dynamically get the token
 const tokenInjector = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-  const auth = localStorage.getItem('auth');
-  const parseAuth = auth ? JSON.parse(auth) : null;
-  const token = parseAuth.token;
+  const token = Cookies.get('accessToken');
   config.headers = config.headers || ({} as AxiosRequestHeaders);
   if (token) {
     (config.headers as AxiosRequestHeaders)['Authorization'] = `Bearer ${token}`;

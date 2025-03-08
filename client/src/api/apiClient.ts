@@ -20,7 +20,8 @@ class HttpClient {
       headers: {
         Accept: 'application/json'
       },
-      timeout: 10000
+      timeout: 10000,
+      withCredentials: true // Add this line to include credentials with every request
     });
   }
 

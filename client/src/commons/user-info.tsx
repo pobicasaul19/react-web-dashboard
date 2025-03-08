@@ -4,7 +4,7 @@ import { useAuth } from '../feature/AuthContext';
 
 export default function UserInfo() {
   const { getAuth } = useAuth();
-  const { user } = getAuth;
+  const user = getAuth()?.user
   if (!user) {
     return null;
   }

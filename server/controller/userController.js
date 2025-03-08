@@ -30,14 +30,13 @@ export const createUser = async (req, res) => {
     const context = { usersCollection };
     const errors = await validationMessage(field, userSchema, context);
 
-    if (errors) {
-      return res.status(400).json({
-        data: errors,
-        metadata: {
-          message: 'An error occurred while creating new user.'
-        }
-      })
-    }
+    errors && res.status(400).json({
+      data: errors,
+      metadata: {
+        message: 'An error occurred while creating new user.'
+      }
+    })
+
 
     // Check if the user already exists
     const userExist = usersCollection.data.users.find(user => user.firstName === firstName);

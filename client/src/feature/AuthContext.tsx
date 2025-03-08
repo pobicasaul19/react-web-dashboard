@@ -1,9 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-import Cookies from 'js-cookie';
 import { AuthUser } from '../models/User';
 import { useTheme } from '@mui/material/styles';
 import { AppProvider } from '@toolpad/core/AppProvider';
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -15,23 +14,31 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [authState, setAuthState] = useState<AuthUser | null>(null);
+  const [authState, setAuthState] = useState<AuthUser | null>(() => {
+    const storedAuth = localStorage.getItem('auth');
+    return storedAuth ? JSON.parse(storedAuth) : null;
+  });
   const theme = useTheme();
   const isAuthenticated = !!authState;
-  
+
   const login = (auth: AuthUser) => {
-    Cookies.set('user', JSON.stringify(auth.user));
-    Cookies.set('accessToken', auth.token ?? '');
+    localStorage.setItem('auth', JSON.stringify(auth));
     setAuthState(auth);
   };
 
   const logout = () => {
+    localStorage.removeItem('auth');
     setAuthState(null);
-    Cookies.remove('accessToken');
-    Cookies.remove('user')
-  };
+  }
 
   const getAuth = () => authState;
+
+  useEffect(() => {
+    const storedAuth = localStorage.getItem('auth');
+    if (storedAuth) {
+      setAuthState(JSON.parse(storedAuth));
+    }
+  }, []);
 
   return (
     <AppProvider theme={theme}>

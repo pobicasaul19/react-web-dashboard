@@ -7,7 +7,7 @@ import { AuthUser } from '../models/User';
 class LoginService {
   public async validateLogin(payload: loginData): Promise<AuthUser> {
     const response = await httpClient.post<AuthUser, loginData>(AUTH_ENDPOINTS.POST_LOGIN, payload);
-    return response as AuthUser;
+    return response.data as AuthUser;
   }
 }
 export default new LoginService();

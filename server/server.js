@@ -19,8 +19,7 @@ app.set("trust proxy", true)
 // Middelwares
 app.use(credentials);
 app.use(cors({
-  origin: corsOptions,
-  credentials: true
+  origin: corsOptions
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
